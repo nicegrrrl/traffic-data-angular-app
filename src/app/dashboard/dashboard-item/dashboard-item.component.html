@@ -1,0 +1,15 @@
+<div class="dashboard-item">
+  <article>
+    <header>
+      <img [src]="image().src" [alt]="image().alt" />
+      <h2>{{ title() }}</h2>
+
+      <!-- with the @Input syntax -->
+      <!-- <img [src]="image.src" alt="image.alt" /> -->
+      <!-- <h2>{{ title }}</h2> -->
+    </header>
+
+    <ng-content />
+    <!-- ng-content is essentialy a placeholder for any wrapped content -->
+  </article>
+</div>
