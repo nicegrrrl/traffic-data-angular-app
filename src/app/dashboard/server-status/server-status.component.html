@@ -1,14 +1,22 @@
 <!-- <div [class.status]="currentStatus === 'online'"> -->
+<!-- <div
+  [class]="{
+    status: true,
+    'status-online': currentStatus === 'online',
+    'status-offline': currentStatus === 'offline',
+    'status-unkown': currentStatus === 'unknown',
+  }"
+  [style.fontSize]="'64px'"
+> -->
+<!-- angular style bind syntax -->
 <div
   [class]="{
     status: true,
     'status-online': currentStatus === 'online',
     'status-offline': currentStatus === 'offline',
-    'status-unkown': currentStatus === 'unkown',
+    'status-unkown': currentStatus === 'unknown',
   }"
-  [style.fontSize]="'64px'"
 >
-  <!-- angular style bind syntax -->
   @if (currentStatus === 'online') {
   <p>Servers are online</p>
   <p>All systems are operational.</p>
