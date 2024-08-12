@@ -1,6 +1,8 @@
 import {
+  AfterViewInit,
   Component,
   ElementRef,
+  OnInit,
   viewChild,
   ViewChild,
   ViewChildren,
@@ -17,13 +19,25 @@ import { ControlComponent } from '../../../shared/control/control.component';
   templateUrl: './new-ticket.component.html',
   styleUrl: './new-ticket.component.css',
 })
-export class NewTicketComponent {
+export class NewTicketComponent implements AfterViewInit, OnInit {
   // @ViewChild('form') form?: ElementRef<HTMLFormElement>;
-  // @ViewChild('form') private form?: ElementRef<HTMLFormElement>;
+  @ViewChild('form') private form?: ElementRef<HTMLFormElement>;
   // @ViewChildren(ButtonComponent) buttons;
 
   // private form = viewChild<ElementRef<HTMLFormElement>>('form');
-  private form = viewChild.required<ElementRef<HTMLFormElement>>('form'); // ⭐ angular 17 +
+  // private form = viewChild.required<ElementRef<HTMLFormElement>>('form'); // ⭐ angular 17 +
+
+  ngOnInit(): void {
+    console.log('ON INIT');
+    // console.log(this.form().nativeElement); // with viewChild()
+    console.log(this.form?.nativeElement); // with @ViewChild
+  }
+
+  ngAfterViewInit(): void {
+    console.log('AFTER VIEW INIT');
+    // console.log(this.form().nativeElement); // with viewChild()
+    console.log(this.form?.nativeElement); // with @ViewChild
+  }
 
   // onSubmit(titleElement: HTMLInputElement) {
   //   const enteredTitle = titleElement.value;
@@ -35,6 +49,7 @@ export class NewTicketComponent {
     console.log(ticketText);
     // this.form?.nativeElement.reset();
     // this.form()?.nativeElement.reset();
-    this.form().nativeElement.reset();
+    // this.form().nativeElement.reset(); // with viewChild
+    this.form?.nativeElement.reset(); // with @ViewChild
   }
 }
