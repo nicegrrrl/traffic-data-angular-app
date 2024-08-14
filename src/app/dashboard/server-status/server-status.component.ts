@@ -1,9 +1,11 @@
 import {
   Component,
   DestroyRef,
+  effect,
   inject,
   OnDestroy,
   OnInit,
+  signal,
 } from '@angular/core';
 
 @Component({
@@ -15,7 +17,7 @@ import {
 })
 // export class ServerStatusComponent implements OnInit, OnDestroy {
 export class ServerStatusComponent implements OnInit {
-  currentStatus: 'offline' | 'online' | 'unknown' = 'online';
+  currentStatus = signal<'offline' | 'online' | 'unknown'>('offline');
   // setting specific values as types uses a TypeScript feature called
   // "Literal Types". This idea is to only allow specific (string) values,
   // instead of all strings.
@@ -24,9 +26,13 @@ export class ServerStatusComponent implements OnInit {
 
   private destroyRef = inject(DestroyRef);
 
-  constructor() {}
   // it's considered a good pratice in Angular applications to keep the constructor lean,
   // and only do basic class initialization in there
+  constructor() {
+    effect(() => { // allows you to run code when signal value changes
+      console.log(this.currentStatus());
+    });
+  }
 
   ngOnInit() {
     // this.interval = setInterval(() => {
@@ -34,11 +40,11 @@ export class ServerStatusComponent implements OnInit {
       const rnd = Math.random();
 
       if (rnd < 0.5) {
-        this.currentStatus = 'online';
+        this.currentStatus.set('online');
       } else if (rnd < 0.9) {
-        this.currentStatus = 'offline';
+        this.currentStatus.set('offline');
       } else {
-        this.currentStatus = 'unknown';
+        this.currentStatus.set('unknown');
       }
     }, 5000);
 
